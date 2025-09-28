@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f162f9;
+}
+
+/* Ẩn scrollbar trên Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ẩn scrollbar trên Firefox */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge cũ */
+}
+
