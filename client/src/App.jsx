@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowGallery(true);
-    }, 15000); // 7 giây
+    }, 1500000); // 7 giây
     return () => clearTimeout(timer);
   }, []);
 

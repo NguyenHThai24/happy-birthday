@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -5,6 +6,7 @@
   height: 100%;
   overflow: hidden;
   background: #f162f9;
+font-family: "Bebas Neue", sans-serif;
 }
 
 /* Ẩn scrollbar trên Chrome, Safari, Edge */
