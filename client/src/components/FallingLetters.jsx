@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, color } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ================= Background chữ mưa =================
 const backgroundLetters = "ILOVEYOU".split("");
@@ -12,11 +11,10 @@ const BackgroundLetters = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+
     const arr = Array.from({ length: 200 }).map(() => ({
       letter:
-        backgroundLetters[
-          Math.floor(Math.random() * backgroundLetters.length)
-        ],
+        backgroundLetters[Math.floor(Math.random() * backgroundLetters.length)],
       x: Math.random() * width,
       y: -Math.random() * height,
       duration: 4 + Math.random() * 6,
@@ -24,6 +22,8 @@ const BackgroundLetters = () => {
     }));
 
     setLetters(arr);
+
+
   }, []);
 
   return (
@@ -69,22 +69,20 @@ const Countdown = ({ onComplete }) => {
     return () => clearTimeout(timer);
   }, [count, onComplete]);
 
-  return (
-    <AnimatePresence>
-      {count > 0 && (
-        <motion.div
-          key={count}
-          className="absolute inset-0 flex items-center justify-center text-white font-bold"
-          style={{ fontSize: "10rem" }}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {count}
-        </motion.div>
-      )}
-    </AnimatePresence>
+  return (<AnimatePresence>
+    {count > 0 && (
+      <motion.div
+        key={count}
+        className="absolute inset-0 flex items-center justify-center text-white font-bold"
+        style={{ fontSize: "10rem" }}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0, opacity: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        {count}
+      </motion.div>
+    )} </AnimatePresence>
   );
 };
 
@@ -93,50 +91,39 @@ const NAME = "NGUYỄN HOÀNG THÁI CHÚC CHỊ SINH NHẬT VUI VẺ";
 
 const Firework = ({ onComplete }) => {
   const [explosions, setExplosions] = useState([]);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
+    // nổ một lần khi mount
     spawnExplosion();
-    setCount(1);
 
-    const loop = setInterval(() => {
-      setCount((prev) => {
-        if (prev < 3) {
-          spawnExplosion();
-          return prev + 1;
-        } else {
-          clearInterval(loop);
-          if (onComplete) onComplete();
-          return prev;
-        }
-      });
+    // gọi onComplete sau khi nổ xong (3s)
+    const timer = setTimeout(() => {
+      if (onComplete) onComplete();
     }, 3000);
 
-    return () => clearInterval(loop);
+    return () => clearTimeout(timer);
   }, []);
 
   const spawnExplosion = () => {
     const particleCount = 111;
     const particles = Array.from({ length: particleCount }).map(() => {
       const angle = Math.random() * Math.PI * 2;
-      const power = 250 + Math.random() * 250; // từ 250px đến 500px
-
+      const power = 250 + Math.random() * 250;
       const char = NAME[Math.floor(Math.random() * NAME.length)];
-
       return {
         x: Math.cos(angle) * power,
         y: Math.sin(angle) * power,
         char,
-        // color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-        color:'red'
+        color: "red",
       };
     });
 
     const newExplosion = { id: Date.now(), particles };
-    setExplosions((prev) => [...prev, newExplosion]);
+    setExplosions([newExplosion]); // chỉ giữ explosion này thôi
 
+    // tự xóa sau 5 giây
     setTimeout(() => {
-      setExplosions((prev) => prev.filter((e) => e.id !== newExplosion.id));
+      setExplosions([]);
     }, 5000);
   };
 
@@ -149,7 +136,6 @@ const Firework = ({ onComplete }) => {
             style={{
               position: "absolute",
               fontSize: 16,
-              // fontWeight: "bold",
               color: p.color,
             }}
             initial={{ x: 0, y: 0, opacity: 1 }}
@@ -168,6 +154,73 @@ const Firework = ({ onComplete }) => {
         ))
       )}
     </div>
+  );
+};
+
+
+// ================== Heart Formation ==================
+const HeartFormation = ({ text, onComplete }) => {
+  const [particles, setParticles] = useState([]);
+
+  useEffect(() => {
+    const count = text.length;
+    const coords = [];
+
+
+    for (let i = 0; i < count; i++) {
+      const t = Math.PI - (i / count) * 2 * Math.PI;
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y =
+        13 * Math.cos(t) -
+        5 * Math.cos(2 * t) -
+        2 * Math.cos(3 * t) -
+        Math.cos(4 * t);
+
+      coords.push({
+        x: x * 15 + window.innerWidth / 22,
+        y: -y * 15 + window.innerHeight / 22,
+        char: text[i],
+      });
+    }
+
+    setParticles(coords);
+
+    const timer = setTimeout(() => {
+      if (onComplete) onComplete();
+    }, 10000);
+    return () => clearTimeout(timer);
+
+
+  }, [text, onComplete]);
+
+  return (<div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+    {particles.map((p, i) => (
+      <motion.div
+        key={i}
+        initial={{
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          opacity: 0,
+        }}
+        animate={{
+          x: p.x,
+          y: p.y,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 3,
+          ease: "easeOut",
+        }}
+        style={{
+          position: "absolute",
+          fontSize: 24,
+          fontWeight: "bold",
+          color: "red",
+        }}
+      >
+        {p.char}
+      </motion.div>
+    ))} </div>
   );
 };
 
@@ -246,6 +299,8 @@ const WordAnimation = ({ letters, y, onComplete, stayTime = 3000 }) => {
         );
       })}
     </>
+
+
   );
 };
 
@@ -258,31 +313,46 @@ const FallingLetters = () => {
 
   const centerY = window.innerHeight / 2;
 
-  return (
-    <div className="w-screen h-screen relative overflow-hidden bg-black">
-      <BackgroundLetters />
+  return (<div className="w-screen h-screen relative overflow-hidden bg-black"> <BackgroundLetters />
 
-      {stage === "countdown" && (
-        <Countdown onComplete={() => setStage("firework")} />
-      )}
 
-      {stage === "firework" && (
-        <Firework onComplete={() => setStage("birthday")} />
-      )}
+    {stage === "countdown" && (
+      <Countdown onComplete={() => setStage("firework")} />
+    )}
 
-      {stage === "birthday" && (
-        <WordAnimation
-          letters={birthdayText}
-          y={centerY}
-          stayTime={7000}
-          onComplete={() => setStage("name")}
-        />
-      )}
+    {stage === "firework" && (
+      <Firework onComplete={() => setStage("heart")} />
+    )}
 
-      {stage === "name" && (
-        <WordAnimation letters={nameText} y={centerY} stayTime={4000} />
-      )}
-    </div>
+    {stage === "heart" && (
+      <HeartFormation text={NAME} onComplete={() => setStage("lineText")} />
+    )}
+
+    {stage === "lineText" && (
+      <WordAnimation
+        letters={"NGUYỄN HOÀNG THÁI CHÚC MỪNG SINH NHẬT".split("")}
+        y={centerY}
+        stayTime={5000}
+        onComplete={() => setStage("birthday")}
+      />
+    )}
+
+
+    {stage === "birthday" && (
+      <WordAnimation
+        letters={birthdayText}
+        y={centerY}
+        stayTime={7000}
+        onComplete={() => setStage("name")}
+      />
+    )}
+
+    {stage === "name" && (
+      <WordAnimation letters={nameText} y={centerY} stayTime={4000} />
+    )}
+  </div>
+
+
   );
 };
 
