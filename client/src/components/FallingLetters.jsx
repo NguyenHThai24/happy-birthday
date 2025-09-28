@@ -187,7 +187,7 @@ const HeartFormation = ({ text, onComplete }) => {
 
     const timer = setTimeout(() => {
       if (onComplete) onComplete();
-    }, 7000);
+    }, 5000);
     return () => clearTimeout(timer);
 
 
@@ -352,14 +352,14 @@ const FallingLetters = () => {
     )}
 
 
-    {/* {stage === "lineText" && (
+    {stage === "lineText" && (
       <WordAnimation
         letters={"NGUYỄN HOÀNG THÁI CHÚC MỪNG SINH NHẬT".split("")}
         y={centerY}
         stayTime={5000}
         onComplete={() => setStage("birthday")}
       />
-    )} */}
+    )}
 
 
     {stage === "birthday" && (
