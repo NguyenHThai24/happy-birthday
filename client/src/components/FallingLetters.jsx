@@ -109,7 +109,7 @@ const Firework = ({ onComplete }) => {
     const particles = Array.from({ length: particleCount }).map(() => {
       const angle = Math.random() * Math.PI * 2;
       const power = 250 + Math.random() * 250;
-      const char = NAME[Math.floor(Math.random() * NAME.length)];
+      const char = backgroundLetters[Math.floor(Math.random() * backgroundLetters.length)];
       return {
         x: Math.cos(angle) * power,
         y: Math.sin(angle) * power,
@@ -177,8 +177,8 @@ const HeartFormation = ({ text, onComplete }) => {
         Math.cos(4 * t);
 
       coords.push({
-        x: x * 15 + window.innerWidth / 22,
-        y: -y * 15 + window.innerHeight / 22,
+        x: x * 15 + window.innerWidth / 28,
+        y: -y * 15 + window.innerHeight / 36,
         char: text[i],
       });
     }
@@ -187,7 +187,7 @@ const HeartFormation = ({ text, onComplete }) => {
 
     const timer = setTimeout(() => {
       if (onComplete) onComplete();
-    }, 10000);
+    }, 7000);
     return () => clearTimeout(timer);
 
 
@@ -325,17 +325,41 @@ const FallingLetters = () => {
     )}
 
     {stage === "heart" && (
-      <HeartFormation text={NAME} onComplete={() => setStage("lineText")} />
+      <>
+        <HeartFormation text={NAME} onComplete={() => setStage("lineText")} />
+
+        {/* Chữ bên dưới trái tim */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          style={{
+            position: "absolute",
+            top: window.innerHeight / 2 + 300, // dưới trái tim một khoảng
+            left: "40%",
+            transform: "translateX(0%)",
+            fontSize: "2rem",
+            fontWeight: "bold",
+            color: "white",
+            textShadow: "0px 0px 10px red",
+            whiteSpace: "nowrap",
+
+          }}
+        >
+          Chúc mừng sinh nhật vui vẻ ❤️
+        </motion.div>
+      </>
     )}
 
-    {stage === "lineText" && (
+
+    {/* {stage === "lineText" && (
       <WordAnimation
         letters={"NGUYỄN HOÀNG THÁI CHÚC MỪNG SINH NHẬT".split("")}
         y={centerY}
         stayTime={5000}
         onComplete={() => setStage("birthday")}
       />
-    )}
+    )} */}
 
 
     {stage === "birthday" && (
