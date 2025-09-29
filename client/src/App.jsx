@@ -5,62 +5,54 @@ import FallingLetters from "./pages/FallingLetters";
 import GalleryLayout from "./pages/GalleryLayout";
 import ConfessionStage from "./pages/ConfessionStage";
 import PasswordGate from "./components/PasswordGate";
+import { useFullscreenOrientation } from "./hooks/useFullscreenOrientation";
 
 function App() {
-  const [stage, setStage] = useState("password"); // password -> fallingLetters -> gallery -> confession
+  const [stage, setStage] = useState("password");
   const [player, setPlayer] = useState(null);
   const [confessionResult, setConfessionResult] = useState(null);
 
+  const { enterFullscreenAndLock, lockPortrait } = useFullscreenOrientation();
+
   useEffect(() => {
-    // Sau khi xem FallingLetters xong (105s), chuyển sang Gallery
     if (stage === "fallingLetters") {
       const timer = setTimeout(() => {
         setStage("gallery");
-      }, 105000); // 105 giây
+      }, 105000);
       return () => clearTimeout(timer);
     }
 
-    // Sau khi xem Gallery (tùy chọn: 60s hoặc scroll hết ảnh), chuyển sang Confession
-    // if (stage === "gallery") {
-    //   const timer = setTimeout(() => {
-    //     setStage("confession");
-    //   }, 60000); // 60 giây xem ảnh
-    //   return () => clearTimeout(timer);
-    // }
-  }, [stage]);
+    if (stage === "gallery") {
+      lockPortrait(); // ✅ quay lại portrait khi sang gallery
+    }
+  }, [stage, lockPortrait]);
 
-  const handlePasswordSuccess = () => {
+  const handlePasswordSuccess = async () => {
+    await enterFullscreenAndLock("landscape"); // ✅ lock ngang
     setStage("fallingLetters");
   };
 
   const handleConfessionComplete = (result) => {
     setConfessionResult(result);
-    // Có thể thêm màn hình kết thúc ở đây
-    // hoặc loop lại gallery
     setTimeout(() => {
-      setStage("gallery"); // quay lại xem ảnh
+      setStage("gallery");
     }, 5000);
   };
 
   return (
-    <div className="w-screen h-screen relative">
+    <div className="w-screen h-screen relative bg-black">
       {stage === "password" && (
         <PasswordGate onSuccess={handlePasswordSuccess} />
       )}
 
       {stage !== "password" && (
         <>
-          {/* YouTube player - luôn chạy khi đã qua password */}
           <YouTube
             videoId="2-V3-WM-T-Y"
             opts={{
               height: "0",
               width: "0",
-              playerVars: {
-                autoplay: 1,
-                loop: 1,
-                playlist: "2-V3-WM-T-Y",
-              },
+              playerVars: { autoplay: 1, loop: 1, playlist: "2-V3-WM-T-Y" },
             }}
             onReady={(e) => {
               setPlayer(e.target);
@@ -68,7 +60,6 @@ function App() {
             }}
           />
 
-          {/* Các stage content */}
           {stage === "fallingLetters" && <FallingLetters />}
           {stage === "gallery" && (
             <GalleryLayout onConfession={() => setStage("confession")} />

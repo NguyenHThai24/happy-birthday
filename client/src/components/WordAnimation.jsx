@@ -58,7 +58,12 @@ const WordAnimation = ({ letters, y, onComplete, stayTime = 3000 }) => {
               fontSize: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
               fontWeight: "bold",
               color: "white",
+              border: "1px solid black",
+              backgroundColor: "black",
+              opacity: 5,
               userSelect: "none",
+              borderRadius: "10px",
+              padding: "0px 2px",
               margin: "0 4px", // khoảng cách nhỏ giữa chữ
               fontFamily: '"Playfair Display", serif',
             }}
