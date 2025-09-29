@@ -229,7 +229,7 @@ const FallingLetters = ({ onStartMusic }) => {
         <WordAnimation
           letters={"01/11/2025".split("")}
           y={centerY}
-          stayTime={7000}
+          stayTime={5000}
         />
       )}
     </div>

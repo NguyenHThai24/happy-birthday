@@ -76,7 +76,7 @@ const messages = {
   21: "Yêu chị nhiều lắm! 💗",
 };
 
-const GalleryLayout = () => {
+const GalleryLayout = ({ onConfession }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [overlayStep, setOverlayStep] = useState(0);
 
@@ -345,6 +345,17 @@ const GalleryLayout = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      {onConfession && (
+        <motion.button
+          className="fixed bottom-6 right-6 z-50 bg-pink-600 hover:bg-pink-700 text-white font-bold px-6 py-3 rounded-full shadow-lg text-lg"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          onClick={onConfession}
+        >
+          💌 Xem lời tỏ tình
+        </motion.button>
+      )}
     </div>
   );
 };
