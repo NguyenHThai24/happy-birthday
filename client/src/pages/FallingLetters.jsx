@@ -210,19 +210,19 @@ const FallingLetters = ({ onStartMusic }) => {
             letters={"RẤT NHIỀU".split("")}
             y={centerY + 20}
             stayTime={4000}
-            onComplete={() => setStage("heart")}
+            onComplete={() => setStage("date")}
           />
         </>
       )}
 
-      {stage === "heart" && (
+      {/* {stage === "heart" && (
         <WordAnimation
           letters={"❤️❤️❤️".split("")}
           y={centerY}
           stayTime={4000}
           onComplete={() => setStage("date")}
         />
-      )}
+      )} */}
 
       {/* Date */}
       {stage === "date" && (
