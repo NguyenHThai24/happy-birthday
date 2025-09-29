@@ -14,7 +14,7 @@ function App() {
     if (authenticated) {
       const timer = setTimeout(() => {
         setShowGallery(true);
-      }, 30000); // 30 giây
+      }, 105000); // 30 giây
       return () => clearTimeout(timer);
     }
   }, [authenticated]);
