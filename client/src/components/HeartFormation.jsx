@@ -1,11 +1,20 @@
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
 const HeartFormation = ({ text, onComplete }) => {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    const count = text.length; // số hạt = số chữ cái
+    const count = text.length;
     const coords = [];
 
-    // Tạo toạ độ trái tim
+    // Lấy tâm màn hình
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    // Scale trái tim theo kích thước màn hình
+    const scale = Math.min(window.innerWidth, window.innerHeight) / 25;
+
     for (let i = 0; i < count; i++) {
       const t = Math.PI - (i / count) * 2 * Math.PI;
       const x = 16 * Math.pow(Math.sin(t), 3);
@@ -16,8 +25,8 @@ const HeartFormation = ({ text, onComplete }) => {
         Math.cos(4 * t);
 
       coords.push({
-        x: x * 15 + window.innerWidth / 2,
-        y: -y * 15 + window.innerHeight / 2 - 100,
+        x: centerX + x * scale,
+        y: centerY - y * scale,
         char: text[i],
       });
     }
@@ -40,18 +49,11 @@ const HeartFormation = ({ text, onComplete }) => {
             y: Math.random() * window.innerHeight,
             opacity: 0,
           }}
-          animate={{
-            x: p.x,
-            y: p.y,
-            opacity: 1,
-          }}
-          transition={{
-            duration: 3,
-            ease: "easeOut",
-          }}
+          animate={{ x: p.x, y: p.y, opacity: 1 }}
+          transition={{ duration: 3, ease: "easeOut" }}
           style={{
             position: "absolute",
-            fontSize: 24,
+            fontSize: Math.min(window.innerWidth, window.innerHeight) * 0.04,
             fontWeight: "bold",
             color: "red",
           }}
@@ -63,4 +65,4 @@ const HeartFormation = ({ text, onComplete }) => {
   );
 };
 
-export default HeartFormation
+export default HeartFormation;

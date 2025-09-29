@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import FallingLetters from "./components/FallingLetters";
-import GalleryLayout from "./components/GalleryLayout";
+import FallingLetters from "./pages/FallingLetters";
+import GalleryLayout from "./pages/GalleryLayout";
 
 function App() {
   const [showGallery, setShowGallery] = useState(false);
@@ -8,16 +8,11 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowGallery(true);
-    }, 1500000); // 7 giây
+    }, 30000); // 7 giây
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <>
-      {!showGallery ? <FallingLetters /> : <GalleryLayout />}
-    </>
-  );
+  return <>{!showGallery ? <FallingLetters /> : <GalleryLayout />}</>;
 }
 
 export default App;
-
