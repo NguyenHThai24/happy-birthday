@@ -1,55 +1,12 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import img72 from "../assets/images/72.jpg";
+// Import ảnh background và backdrop
+const bgImage = img72;
 
-import img1 from "../assets/images/1.jpg";
-import img2 from "../assets/images/2.jpg";
-import img3 from "../assets/images/3.jpg";
-import img4 from "../assets/images/4.jpg";
-import img5 from "../assets/images/5.jpg";
-import img6 from "../assets/images/6.jpg";
-import img7 from "../assets/images/7.jpg";
-import img8 from "../assets/images/8.jpg";
-import img9 from "../assets/images/9.jpg";
-import img10 from "../assets/images/10.jpg";
-import img11 from "../assets/images/11.jpg";
-import img12 from "../assets/images/12.jpg";
-import img13 from "../assets/images/13.jpg";
-import img14 from "../assets/images/14.jpg";
-import img15 from "../assets/images/15.jpg";
-import img16 from "../assets/images/16.jpg";
-import img17 from "../assets/images/17.jpg";
-import img18 from "../assets/images/18.jpg";
-import img19 from "../assets/images/19.jpg";
-import img20 from "../assets/images/20.jpg";
-import img21 from "../assets/images/21.jpg";
-import img22 from "../assets/images/22.jpg";
-
-const images = [
-  img1,
-  img2,
-  img3,
-  img4,
-  img5,
-  img6,
-  img7,
-  img8,
-  img9,
-  img10,
-  img11,
-  img12,
-  img13,
-  img14,
-  img15,
-  img16,
-  img17,
-  img18,
-  img19,
-  img20,
-  img21,
-  img22,
-];
-
-const reversedImages = [...images].reverse();
+// Load tất cả ảnh từ thư mục assets/images
+const images = import.meta.glob("../assets/images/*.jpg", { eager: true });
+const imageList = Object.values(images).map((module) => module.default);
 
 const messages = {
   0: "Chúc chị luôn rạng rỡ như ánh mặt trời 🌟",
@@ -95,7 +52,7 @@ const GalleryLayout = ({ onConfession }) => {
       {/* Background với overlay gradient */}
       <div className="fixed inset-0 z-0">
         <img
-          src={img21}
+          src={bgImage}
           alt="background"
           className="w-full h-full object-cover"
         />
@@ -123,7 +80,7 @@ const GalleryLayout = ({ onConfession }) => {
       <div className="absolute inset-0 z-10 overflow-y-auto pt-32 pb-8 px-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-            {reversedImages.map((img, i) => (
+            {imageList.map((img, i) => (
               <motion.div
                 key={i}
                 className="relative group"
@@ -158,7 +115,7 @@ const GalleryLayout = ({ onConfession }) => {
 
                   {/* Number badge */}
                   <div className="absolute top-3 right-3 bg-pink-500/90 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                    {reversedImages.length - i}
+                    {i + 1}
                   </div>
                 </motion.div>
 
@@ -197,7 +154,7 @@ const GalleryLayout = ({ onConfession }) => {
             <motion.div
               className="absolute inset-0"
               style={{
-                backgroundImage: `url(${img16})`,
+                backgroundImage: `url(${bgImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

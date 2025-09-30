@@ -5,14 +5,11 @@ import FallingLetters from "./pages/FallingLetters";
 import GalleryLayout from "./pages/GalleryLayout";
 import ConfessionStage from "./pages/ConfessionStage";
 import PasswordGate from "./components/PasswordGate";
-import { useFullscreenOrientation } from "./hooks/useFullscreenOrientation";
 
 function App() {
   const [stage, setStage] = useState("password");
   const [player, setPlayer] = useState(null);
   const [confessionResult, setConfessionResult] = useState(null);
-
-  const { enterFullscreenAndLock, lockPortrait } = useFullscreenOrientation();
 
   useEffect(() => {
     if (stage === "fallingLetters") {
@@ -21,14 +18,9 @@ function App() {
       }, 102000);
       return () => clearTimeout(timer);
     }
+  }, [stage]);
 
-    if (stage === "gallery") {
-      lockPortrait(); // ✅ quay lại portrait khi sang gallery
-    }
-  }, [stage, lockPortrait]);
-
-  const handlePasswordSuccess = async () => {
-    await enterFullscreenAndLock("landscape"); // ✅ lock ngang
+  const handlePasswordSuccess = () => {
     setStage("fallingLetters");
   };
 
