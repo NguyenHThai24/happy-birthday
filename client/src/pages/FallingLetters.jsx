@@ -36,12 +36,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"HÔM NAY".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={3000}
           />
           <WordAnimation
             letters={"LÀ NGÀY ĐẶC BIỆT".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={3000}
             onComplete={() => setStage("intro2")}
           />
@@ -70,16 +70,17 @@ const FallingLetters = ({ onStartMusic }) => {
       {stage === "birthday" && (
         <>
           <WordAnimation
-            letters={"HAPPY".split("")}
-            y={centerY - 30}
-            stayTime={4000}
-          />
-          <WordAnimation
-            letters={"BIRTHDAY".split("")}
-            y={centerY + 20}
+            letters={"HAPPY BIRTHDAY".split("")}
+            y={centerY}
             stayTime={4000}
             onComplete={() => setStage("name")}
           />
+          {/* <WordAnimation
+            letters={"BIRTHDAY".split("")}
+            // y={centerY + 20}
+            stayTime={4000}
+            onComplete={() => setStage("name")}
+          /> */}
         </>
       )}
 
@@ -87,16 +88,17 @@ const FallingLetters = ({ onStartMusic }) => {
       {stage === "name" && (
         <>
           <WordAnimation
-            letters={"LÂM".split("")}
-            y={centerY - 30}
+            letters={"LÂM BỬU LINH".split("")}
+            y={centerY}
             stayTime={4000}
+            onComplete={() => setStage("age")}
           />
-          <WordAnimation
+          {/* <WordAnimation
             letters={"BỬU LINH".split("")}
             y={centerY + 20}
             stayTime={4000}
             onComplete={() => setStage("age")}
-          />
+          /> */}
         </>
       )}
 
@@ -104,16 +106,17 @@ const FallingLetters = ({ onStartMusic }) => {
       {stage === "age" && (
         <>
           <WordAnimation
-            letters={"CHÚC MỪNG".split("")}
-            y={centerY - 30}
+            letters={"CHÚC MỪNG TUỔI MỚI".split("")}
+            y={centerY}
             stayTime={3000}
+            onComplete={() => setStage("wish1")}
           />
-          <WordAnimation
+          {/* <WordAnimation
             letters={"TUỔI MỚI".split("")}
             y={centerY + 20}
             stayTime={3000}
             onComplete={() => setStage("wish1")}
-          />
+          /> */}
         </>
       )}
 
@@ -122,12 +125,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"CHÚC CHỊ".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={3500}
           />
           <WordAnimation
             letters={"LUÔN XINH ĐẸP".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={3500}
             onComplete={() => setStage("wish2")}
           />
@@ -138,12 +141,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"LUÔN VUI VẺ".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={3500}
           />
           <WordAnimation
             letters={"TƯƠI TẮN".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={3500}
             onComplete={() => setStage("wish3")}
           />
@@ -153,16 +156,17 @@ const FallingLetters = ({ onStartMusic }) => {
       {stage === "wish3" && (
         <>
           <WordAnimation
-            letters={"THÀNH CÔNG".split("")}
-            y={centerY - 30}
+            letters={"THÀNH CÔNG RỰC RỠ".split("")}
+            y={centerY}
             stayTime={3500}
+            onComplete={() => setStage("wish4")}
           />
-          <WordAnimation
+          {/* <WordAnimation
             letters={"RỰC RỠ".split("")}
             y={centerY + 20}
             stayTime={3500}
             onComplete={() => setStage("wish4")}
-          />
+          /> */}
         </>
       )}
 
@@ -170,12 +174,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"SỨC KHỎE".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={3500}
           />
           <WordAnimation
             letters={"DỒI DÀO".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={3500}
             onComplete={() => setStage("wish5")}
           />
@@ -186,12 +190,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"MỌI ĐIỀU".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={3500}
           />
           <WordAnimation
             letters={"ĐỀU THUẬN LỢI".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={3500}
             onComplete={() => setStage("love")}
           />
@@ -203,12 +207,12 @@ const FallingLetters = ({ onStartMusic }) => {
         <>
           <WordAnimation
             letters={"YÊU CHỊ".split("")}
-            y={centerY - 30}
+            y={centerY - 60}
             stayTime={4000}
           />
           <WordAnimation
             letters={"RẤT NHIỀU".split("")}
-            y={centerY + 20}
+            y={centerY + 60}
             stayTime={4000}
             onComplete={() => setStage("date")}
           />

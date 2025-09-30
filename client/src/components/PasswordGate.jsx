@@ -31,9 +31,8 @@ const PasswordGate = ({ onSuccess }) => {
       <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-pink-200/20 rounded-full blur-2xl animate-pulse delay-300"></div>
 
       <div
-        className={`relative bg-white/95 backdrop-blur-sm p-10 rounded-3xl shadow-2xl text-center max-w-md w-full mx-4 border-2 border-pink-200/50 ${
-          isShaking ? "animate-shake" : ""
-        }`}
+        className={`relative bg-white/95 backdrop-blur-sm p-10 rounded-3xl shadow-2xl text-center max-w-md w-full mx-4 border-2 border-pink-200/50 ${isShaking ? "animate-shake" : ""
+          }`}
         style={{
           animation: isShaking ? "shake 0.5s" : "none",
         }}
@@ -125,27 +124,14 @@ const PasswordGate = ({ onSuccess }) => {
         </p>
       </div>
 
-      <style jsx>{`
-        @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          10%,
-          30%,
-          50%,
-          70%,
-          90% {
-            transform: translateX(-10px);
-          }
-          20%,
-          40%,
-          60%,
-          80% {
-            transform: translateX(10px);
-          }
-        }
-      `}</style>
+      <style>{`
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+  }
+`}</style>
+
     </div>
   );
 };
