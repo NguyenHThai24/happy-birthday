@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import img72 from "../assets/images/72.jpg";
-// Import ảnh background và backdrop
+
 const bgImage = img72;
 
-// Load tất cả ảnh từ thư mục assets/images
 const images = import.meta.glob("../assets/images/*.jpg", { eager: true });
 const imageList = Object.values(images).map((module) => module.default);
 
@@ -47,7 +46,7 @@ const messages = {
   35: "Em muốn là người làm chị ấm lòng những ngày lạnh 🔥",
   36: "Mỗi ngày thức dậy, em đều mong được gặp chị ☀️",
   37: "Chị là giấc mơ đẹp nhất em không muốn tỉnh dậy 💭",
-  38: "Em nguyện dành cả them xuân để yêu thương chị 🌱",
+  38: "Em nguyện dành cả thanh xuân để yêu thương chị 🌱",
   39: "Với em, chị không chỉ đẹp mà còn tuyệt vời 🌹",
   40: "Em muốn là người hiểu chị nhất trên đời này 🤝",
   41: "Tim em rung động mỗi lần nhìn thấy chị 💘",
@@ -123,290 +122,211 @@ const messages = {
 };
 
 const GalleryLayout = ({ onConfession }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [overlayStep, setOverlayStep] = useState(0);
-
-  // const handleOverlayClick = (e) => {
-  //   e.stopPropagation();
-  //   if (overlayStep === 1) {
-  //     setOverlayStep(2);
-  //   } else if (overlayStep === 2) {
-  //     setOverlayStep(0);
-  //     setSelectedImage(null);
-  //   }
-  // };
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
     <div className="w-screen h-screen relative">
-      {/* Background với overlay gradient */}
+      {/* Background với overlay gradient hồng */}
       <div className="fixed inset-0 z-0">
         <img
           src={bgImage}
           alt="background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-green-400/20" />
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-400/30 via-rose-300/30 to-pink-500/30" />
+      </div>
+
+      {/* Floating hearts background */}
+      <div className="fixed inset-0 z-5 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-pink-300/20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              fontSize: `${30 + Math.random() * 40}px`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "easeInOut",
+            }}
+          >
+            {["💕", "💖", "💗", "🌸"][Math.floor(Math.random() * 4)]}
+          </motion.div>
+        ))}
       </div>
 
       {/* Header */}
       <motion.div
-        className="fixed top-0 left-0 right-0 z-20 bg-gradient-to-r from-pink-500/90 via-purple-500/90 to-green-400/90 backdrop-blur-md shadow-lg"
+        className="fixed top-0 left-0 right-0 z-20 bg-gradient-to-r from-pink-400/95 via-rose-400/95 to-pink-500/95 backdrop-blur-md shadow-xl"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, type: "spring" }}
       >
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center drop-shadow-lg">
-            🎂 Kỷ Niệm Đáng Nhớ 💝
+          <h1 className="text-3xl md:text-4xl font-bold text-white text-center drop-shadow-xl flex items-center justify-center gap-3">
+            <span>💝</span>
+            Kỷ Niệm Đáng Nhớ
+            <span>💝</span>
           </h1>
-          <p className="text-white/90 text-center mt-2 text-sm md:text-base">
-            Nhấn vào ảnh để xem lời chúc đặc biệt ✨
+          <p className="text-white/95 text-center mt-2 text-sm md:text-base font-medium">
+            Rê chuột vào ảnh để xem lời chúc đặc biệt ✨
           </p>
         </div>
       </motion.div>
 
       {/* Grid ảnh */}
-      <div className="absolute inset-0 z-10 overflow-y-auto pt-32 pb-8 px-4">
+      <div className="absolute inset-0 z-10 overflow-y-auto pt-32 pb-24 px-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
             {imageList.map((img, i) => (
               <motion.div
                 key={i}
-                className="relative group"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
+                className="relative"
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: i * 0.03, duration: 0.5 }}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                {/* Image container */}
-                <motion.div
-                  className="relative overflow-hidden rounded-2xl shadow-xl cursor-pointer aspect-square bg-white/10 backdrop-blur-sm border-2 border-white/30"
-                  onClick={() => {
-                    setSelectedImage({ src: img, index: i });
-                    setOverlayStep(1);
-                  }}
+                <div
+                  className="relative aspect-square"
+                  style={{ perspective: "1000px" }}
                 >
-                  <img
-                    src={img}
-                    alt={`memory-${i}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <motion.div
+                    className="relative w-full h-full"
+                    animate={{
+                      rotateY: hoveredIndex === i ? 180 : 0,
+                    }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* Front side - Image */}
+                    <div
+                      className="absolute inset-0 rounded-2xl overflow-hidden shadow-xl border-4 border-pink-200/50"
+                      style={{ backfaceVisibility: "hidden" }}
+                    >
+                      <img
+                        src={img}
+                        alt={`memory-${i}`}
+                        className="w-full h-full object-cover"
+                      />
 
-                  {/* Hover overlay với lời chúc */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/95 via-purple-500/95 to-green-400/95 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center p-4">
-                    <div className="text-center">
+                      {/* Gradient overlay on front */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-pink-400/10 to-rose-400/10 pointer-events-none" />
+
+                      {/* Number badge */}
+                      <div className="absolute top-3 right-3 bg-gradient-to-br from-pink-500 to-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                        {i + 1}
+                      </div>
+
+                      {/* Sparkle effect */}
                       <motion.div
-                        className="text-4xl mb-3"
+                        className="absolute top-3 left-3 text-2xl"
                         animate={{
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 10, -10, 0],
+                          rotate: [0, 360],
+                          scale: [1, 1.3, 1],
                         }}
                         transition={{
-                          duration: 2,
+                          duration: 3,
                           repeat: Infinity,
-                          ease: "easeInOut",
+                          ease: "linear",
                         }}
                       >
-                        💝
+                        ✨
                       </motion.div>
-                      <p className="text-white font-bold text-sm md:text-base leading-relaxed drop-shadow-lg">
-                        {messages[i] || "Chúc chị luôn hạnh phúc 💕"}
-                      </p>
                     </div>
-                  </div>
 
-                  {/* Number badge */}
-                  <div className="absolute top-3 right-3 bg-pink-500/90 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                    {i + 1}
-                  </div>
-                </motion.div>
+                    {/* Back side - Message */}
+                    <div
+                      className="absolute inset-0 rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-gradient-to-br from-pink-400 via-rose-400 to-pink-500 p-4 flex items-center justify-center"
+                      style={{
+                        backfaceVisibility: "hidden",
+                        transform: "rotateY(180deg)",
+                      }}
+                    >
+                      {/* Floating hearts background on back */}
+                      <div className="absolute inset-0 opacity-10">
+                        {[...Array(8)].map((_, j) => (
+                          <motion.div
+                            key={j}
+                            className="absolute text-white text-3xl"
+                            style={{
+                              left: `${Math.random() * 100}%`,
+                              top: `${Math.random() * 100}%`,
+                            }}
+                            animate={{
+                              y: [0, -15, 0],
+                              rotate: [0, 360],
+                              opacity: [0.2, 0.4, 0.2],
+                            }}
+                            transition={{
+                              duration: 3 + Math.random() * 2,
+                              repeat: Infinity,
+                              delay: Math.random() * 2,
+                            }}
+                          >
+                            {["💕", "💖", "✨"][Math.floor(Math.random() * 3)]}
+                          </motion.div>
+                        ))}
+                      </div>
 
-                {/* Sparkle effect on hover */}
-                <motion.div
-                  className="absolute -top-1 -right-1 text-2xl opacity-0 group-hover:opacity-100"
-                  animate={{
-                    rotate: [0, 360],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                >
-                  ✨
-                </motion.div>
+                      {/* Message content */}
+                      <div className="relative z-10 text-center">
+                        <motion.div
+                          className="text-4xl mb-3"
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 10, -10, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          💝
+                        </motion.div>
+                        <div className="bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-2xl">
+                          <p className="text-xs sm:text-sm md:text-base font-bold text-transparent bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 bg-clip-text leading-relaxed">
+                            {messages[i] || "Chúc chị luôn hạnh phúc 💕"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Overlay modal */}
-      {/* <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={handleOverlayClick}
-          >
-      
-            <motion.div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url(${bgImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              initial={{ scale: 1.2 }}
-              animate={{ scale: 1 }}
-            >
-              <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
-            </motion.div>
-
-    
-            <motion.button
-              className="absolute top-4 right-4 z-[60] bg-white/20 hover:bg-white/30 backdrop-blur-md text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-colors"
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setOverlayStep(0);
-                setSelectedImage(null);
-              }}
-            >
-              ✕
-            </motion.button>
-
-       
-            {overlayStep === 1 && (
-              <motion.div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[60] bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-white font-medium"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                Nhấn vào ảnh để xem lời chúc 💝
-              </motion.div>
-            )}
-
-       
-            <motion.div
-              className="relative w-full max-w-2xl aspect-[3/4] cursor-pointer z-[55]"
-              style={{ perspective: "1000px" }}
-              initial={{ scale: 0.8, y: 100 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            >
-              <motion.div
-                className="relative w-full h-full"
-                animate={{
-                  rotateY: overlayStep === 2 ? 180 : 0,
-                }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <div
-                  className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <img
-                    src={selectedImage.src}
-                    alt="enlarged"
-                    className="w-full h-full object-contain bg-gradient-to-br from-pink-100 to-purple-100"
-                  />
-                  
-                  <div className="absolute inset-0 border-8 border-white/30 rounded-3xl pointer-events-none" />
-                </div>
-
-                <div
-                  className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-pink-400 via-purple-400 to-green-300 p-8 flex flex-col items-center justify-center"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                >
-                  <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                    {[...Array(20)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute text-white text-4xl"
-                        style={{
-                          left: `${Math.random() * 100}%`,
-                          top: `${Math.random() * 100}%`,
-                        }}
-                        animate={{
-                          y: [0, -20, 0],
-                          opacity: [0.3, 0.6, 0.3],
-                          rotate: [0, 360],
-                        }}
-                        transition={{
-                          duration: 3 + Math.random() * 2,
-                          repeat: Infinity,
-                          delay: Math.random() * 2,
-                        }}
-                      >
-                        {
-                          ["💖", "✨", "🌸", "💝", "🎂"][
-                          Math.floor(Math.random() * 5)
-                          ]
-                        }
-                      </motion.div>
-                    ))}
-                  </div>
-
-                
-                  <motion.div
-                    className="relative z-10 text-center"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.3, type: "spring" }}
-                  >
-                    <div className="bg-white/95 backdrop-blur-md rounded-2xl p-8 shadow-2xl border-4 border-white">
-                      <motion.div
-                        className="text-6xl mb-6"
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 10, -10, 0],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      >
-                        💝
-                      </motion.div>
-                      <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-green-600 bg-clip-text text-transparent leading-relaxed">
-                        {messages[selectedImage.index] ||
-                          "Chúc chị luôn hạnh phúc 💕"}
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  <motion.p
-                    className="absolute bottom-8 text-white/90 text-sm font-medium"
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    Nhấn lần nữa để đóng
-                  </motion.p>
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
+      {/* Confession button */}
       {onConfession && (
         <motion.button
-          className="fixed bottom-6 right-6 z-50 bg-pink-600 hover:bg-pink-700 text-white font-bold px-6 py-3 rounded-full shadow-lg text-lg"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:via-rose-600 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full shadow-2xl text-lg"
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 15,
+            delay: 0.5,
+          }}
+          whileHover={{ scale: 1.1, y: -5 }}
+          whileTap={{ scale: 0.95 }}
           onClick={onConfession}
         >
-          💌 Xem lời tỏ tình
+          <span className="flex items-center gap-2">💌 Xem lời tỏ tình</span>
         </motion.button>
       )}
     </div>

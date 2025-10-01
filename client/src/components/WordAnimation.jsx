@@ -139,7 +139,7 @@ const WordAnimation = ({
     fontFamily: '"Playfair Display", serif',
     padding: "12px 16px",
     margin: "4px",
-    borderRadius: "20%",
+    borderRadius: "50%",
     boxShadow: `
       0 6px 20px rgba(0,0,0,0.3),
       0 3px 10px rgba(0,0,0,0.2),
