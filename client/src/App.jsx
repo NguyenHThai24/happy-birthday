@@ -79,7 +79,7 @@ function App() {
               playerVars: {
                 autoplay: 1,
                 loop: 1,
-                playlist: "IOe0tNoUGv8",
+                playlist: "",
               },
             }}
             onReady={(e) => {
