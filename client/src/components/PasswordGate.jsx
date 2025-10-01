@@ -10,7 +10,7 @@ const PasswordGate = ({ onSuccess }) => {
       setError("");
       onSuccess();
     } else {
-      setError("Sai mật mã, thử lại!");
+      setError("Sai mật mã, chị nhập lại nha. Xem gợi ý bên dưới!");
       setIsShaking(true);
       setTimeout(() => setIsShaking(false), 500);
       setCode("");
