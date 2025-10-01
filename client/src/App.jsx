@@ -1,4 +1,3 @@
-// App.jsx
 import { useState, useEffect } from "react";
 import YouTube from "react-youtube";
 import FallingLetters from "./pages/FallingLetters";
@@ -10,12 +9,23 @@ function App() {
   const [stage, setStage] = useState("password");
   const [player, setPlayer] = useState(null);
   const [confessionResult, setConfessionResult] = useState(null);
+  const [showConfession, setShowConfession] = useState(false);
 
   useEffect(() => {
     if (stage === "fallingLetters") {
       const timer = setTimeout(() => {
         setStage("gallery");
-      }, 102000);
+      }, 100000);
+      return () => clearTimeout(timer);
+    }
+  }, [stage]);
+
+  useEffect(() => {
+    if (stage === "confession") {
+      setShowConfession(false);
+      const timer = setTimeout(() => {
+        setShowConfession(true);
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [stage]);
@@ -28,7 +38,7 @@ function App() {
     setConfessionResult(result);
     setTimeout(() => {
       setStage("gallery");
-    }, 5000);
+    }, 0);
   };
 
   return (
@@ -37,7 +47,7 @@ function App() {
         <PasswordGate onSuccess={handlePasswordSuccess} />
       )}
 
-      {stage !== "password" && (
+      {stage !== "password" && stage !== "confession" && (
         <>
           <YouTube
             videoId="2-V3-WM-T-Y"
@@ -56,7 +66,27 @@ function App() {
           {stage === "gallery" && (
             <GalleryLayout onConfession={() => setStage("confession")} />
           )}
-          {stage === "confession" && (
+        </>
+      )}
+
+      {stage === "confession" && (
+        <>
+          <YouTube
+            videoId="IOe0tNoUGv8"
+            opts={{
+              height: "0",
+              width: "0",
+              playerVars: {
+                autoplay: 1,
+                loop: 1,
+                playlist: "IOe0tNoUGv8",
+              },
+            }}
+            onReady={(e) => {
+              e.target.setVolume(80);
+            }}
+          />
+          {showConfession && (
             <ConfessionStage onComplete={handleConfessionComplete} />
           )}
         </>

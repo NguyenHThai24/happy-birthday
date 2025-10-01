@@ -17,9 +17,21 @@ const getRandomOutside = (width, height) => {
 
 const getRandomColor = () => {
   const colors = [
-    "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7",
-    "#DDA0DD", "#98D8C8", "#F7DC6F", "#BB8FCE", "#85C1E9",
-    "#F8C471", "#82E0AA", "#F1948A", "#85C1E9", "#D7BDE2"
+    "#FF6B6B",
+    "#4ECDC4",
+    "#45B7D1",
+    "#96CEB4",
+    "#FFEAA7",
+    "#DDA0DD",
+    "#98D8C8",
+    "#F7DC6F",
+    "#BB8FCE",
+    "#85C1E9",
+    "#F8C471",
+    "#82E0AA",
+    "#F1948A",
+    "#85C1E9",
+    "#D7BDE2",
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -33,7 +45,7 @@ const getRandomGradient = () => {
     "linear-gradient(45deg, #BB8FCE, #85C1E9)",
     "linear-gradient(45deg, #F8C471, #82E0AA)",
     "linear-gradient(45deg, #F1948A, #85C1E9)",
-    "linear-gradient(45deg, #D7BDE2, #F8C471)"
+    "linear-gradient(45deg, #D7BDE2, #F8C471)",
   ];
   return gradients[Math.floor(Math.random() * gradients.length)];
 };
@@ -43,7 +55,7 @@ const WordAnimation = ({
   y,
   onComplete,
   stayTime = 3000,
-  animationStyle = "fly" // fly, bounce, scale, twist
+  animationStyle = "fly", // fly, bounce, scale, twist
 }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -79,7 +91,7 @@ const WordAnimation = ({
         duration: 1.5 + stayTime / 1000 + 1.5,
         ease: "easeInOut",
         delay: index * 0.1,
-      }
+      },
     };
 
     switch (animationStyle) {
@@ -90,7 +102,7 @@ const WordAnimation = ({
             ...baseProps.animate,
             scale: [0, 1.2, 1, 0],
             rotate: [-180, 0, 0, 180],
-          }
+          },
         };
       case "scale":
         return {
@@ -98,7 +110,7 @@ const WordAnimation = ({
           animate: {
             ...baseProps.animate,
             scale: [0, 1.5, 1, 0],
-          }
+          },
         };
       case "twist":
         return {
@@ -107,7 +119,7 @@ const WordAnimation = ({
             ...baseProps.animate,
             rotate: [0, 360, 360, -360],
             scale: [0, 1, 1, 0],
-          }
+          },
         };
       default:
         return baseProps;
@@ -121,20 +133,27 @@ const WordAnimation = ({
     color: "white",
     backgroundColor: colors[index],
     background: gradients[index],
-    border: `2px solid ${colors[index]}`,
+    border: `3px solid rgba(255,255,255,0.3)`,
     opacity: 5,
     userSelect: "none",
-    borderRadius: "15px",
     fontFamily: '"Playfair Display", serif',
-    padding: "8px 12px",
-    margin: "2px",
+    padding: "12px 16px",
+    margin: "4px",
+    borderRadius: "20%",
     boxShadow: `
-      0 4px 8px rgba(0,0,0,0.2),
-      inset 0 1px 0 rgba(255,255,255,0.3),
-      inset 0 -1px 0 rgba(0,0,0,0.2)
+      0 6px 20px rgba(0,0,0,0.3),
+      0 3px 10px rgba(0,0,0,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -2px 0 rgba(0,0,0,0.2)
     `,
-    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-    transform: "translateZ(0)", // Hardware acceleration
+    textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+    transform: "translateZ(0)",
+    position: "relative",
+    minWidth: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+    minHeight: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
   });
 
   return (
@@ -163,7 +182,7 @@ const WordAnimation = ({
             whileHover={{
               scale: 1.1,
               rotate: 5,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
           >
             {letter}

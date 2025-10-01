@@ -6,6 +6,11 @@ const ConfessionStage = ({ onComplete }) => {
 
   const confessionSteps = [
     {
+      text: "...",
+      duration: 5000,
+      emoji: "💭",
+    },
+    {
       text: "Có điều gì đó...",
       duration: 3000,
       emoji: "💭",
@@ -16,62 +21,207 @@ const ConfessionStage = ({ onComplete }) => {
       emoji: "💌",
     },
     {
-      text: "Từ lần đầu gặp chị",
+      text: "Từ lần đầu tiên gặp chị",
       duration: 3500,
       emoji: "✨",
     },
     {
-      text: "Em đã cảm thấy",
-      duration: 3000,
+      text: "Em đã cảm thấy điều gì đó khác biệt",
+      duration: 3500,
       emoji: "💓",
     },
     {
-      text: "Trái tim mình rung động",
-      duration: 3500,
-      emoji: "💗",
-    },
-    {
-      text: "Chị luôn là người",
+      text: "Có lẽ đó là định mệnh",
       duration: 3000,
       emoji: "🌟",
     },
     {
-      text: "Khiến em cười mỗi ngày",
-      duration: 3500,
+      text: "Nụ cười của chị",
+      duration: 3000,
       emoji: "😊",
     },
     {
-      text: "Là ánh sáng trong đời em",
+      text: "Như ánh nắng ấm áp",
       duration: 3500,
       emoji: "☀️",
     },
     {
-      text: "Em muốn được",
-      duration: 3000,
-      emoji: "🙏",
+      text: "Xua tan mọi buồn phiền trong em",
+      duration: 3500,
+      emoji: "🌈",
     },
     {
-      text: "Tìm hiểu chị nhiều hơn",
+      text: "Mỗi lần nhìn thấy chị",
+      duration: 3000,
+      emoji: "👀",
+    },
+    {
+      text: "Tim em lại đập nhanh hơn",
+      duration: 3500,
+      emoji: "💗",
+    },
+    {
+      text: "Giọng nói của chị",
+      duration: 3000,
+      emoji: "🎵",
+    },
+    {
+      text: "Như giai điệu du dương",
+      duration: 3500,
+      emoji: "🎶",
+    },
+    {
+      text: "Luôn vang vọng trong tâm trí em",
+      duration: 3500,
+      emoji: "💭",
+    },
+    {
+      text: "Chị biết không...",
+      duration: 3000,
+      emoji: "🤔",
+    },
+    {
+      text: "Em thích cách chị cười",
+      duration: 3000,
+      emoji: "😄",
+    },
+    {
+      text: "Thích cách chị nói chuyện",
+      duration: 3000,
+      emoji: "💬",
+    },
+    {
+      text: "Thích tất cả những gì về chị",
       duration: 3500,
       emoji: "💝",
     },
     {
-      text: "Được ở bên chị",
+      text: "Mỗi ngày trôi qua",
+      duration: 3000,
+      emoji: "📅",
+    },
+    {
+      text: "Em lại càng thêm yêu quý chị",
+      duration: 3500,
+      emoji: "💖",
+    },
+    {
+      text: "Cảm giác này...",
+      duration: 3000,
+      emoji: "💭",
+    },
+    {
+      text: "Thật khó để diễn tả bằng lời",
+      duration: 3500,
+      emoji: "✍️",
+    },
+    {
+      text: "Nhưng em biết chắc một điều",
+      duration: 3000,
+      emoji: "💡",
+    },
+    {
+      text: "Chị là người đặc biệt nhất",
+      duration: 3500,
+      emoji: "⭐",
+    },
+    {
+      text: "Trong cuộc đời em",
+      duration: 3500,
+      emoji: "🌟",
+    },
+    {
+      text: "Em muốn được ở bên chị",
       duration: 3000,
       emoji: "🤝",
     },
     {
-      text: "Chia sẻ từng khoảnh khắc",
-      duration: 3500,
-      emoji: "📸",
+      text: "Chia sẻ niềm vui",
+      duration: 3000,
+      emoji: "😊",
     },
     {
-      text: "Chị có cho em cơ hội...",
+      text: "Cùng vượt qua khó khăn",
+      duration: 3500,
+      emoji: "💪",
+    },
+    {
+      text: "Em muốn được chăm sóc chị",
+      duration: 3000,
+      emoji: "🫶",
+    },
+    {
+      text: "Bảo vệ chị",
+      duration: 3000,
+      emoji: "🛡️",
+    },
+    {
+      text: "Và luôn làm chị hạnh phúc",
+      duration: 3500,
+      emoji: "😊",
+    },
+    {
+      text: "Em hứa sẽ cố gắng",
+      duration: 3000,
+      emoji: "🙏",
+    },
+    {
+      text: "Để trở thành người tốt hơn",
+      duration: 3500,
+      emoji: "🌱",
+    },
+    {
+      text: "Xứng đáng với chị",
+      duration: 3500,
+      emoji: "💎",
+    },
+    {
+      text: "Em biết mình còn nhiều thiếu sót",
+      duration: 3000,
+      emoji: "😔",
+    },
+    {
+      text: "Nhưng em sẽ học hỏi",
+      duration: 3000,
+      emoji: "📚",
+    },
+    {
+      text: "Và trưởng thành mỗi ngày",
+      duration: 3500,
+      emoji: "🌿",
+    },
+    {
+      text: "Để có thể đồng hành cùng chị",
+      duration: 3500,
+      emoji: "👫",
+    },
+    {
+      text: "Trên con đường phía trước",
+      duration: 3500,
+      emoji: "🛤️",
+    },
+    {
+      text: "Em không biết tương lai sẽ ra sao",
+      duration: 3000,
+      emoji: "🔮",
+    },
+    {
+      text: "Nhưng em biết rằng...",
+      duration: 3000,
+      emoji: "💭",
+    },
+    {
+      text: "Em muốn chị ở trong đó",
+      duration: 3500,
+      emoji: "💕",
+    },
+    {
+      text: "Chị có cho em một cơ hội...",
       duration: 4000,
       emoji: "🌹",
     },
     {
-      text: "Được làm quen với chị không?",
+      text: "Để em được tìm hiểu chị nhiều hơn?",
       duration: 5000,
       emoji: "💖",
       isQuestion: true,
@@ -84,15 +234,12 @@ const ConfessionStage = ({ onComplete }) => {
         setStage(stage + 1);
       }, confessionSteps[stage].duration);
       return () => clearTimeout(timer);
-    } else if (stage === confessionSteps.length) {
-      // Hiện nút chọn
-      return;
     }
   }, [stage]);
 
   const handleResponse = async (answer) => {
     // Gửi email qua EmailJS
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // Lấy từ emailjs.com
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
     const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
     const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
@@ -110,7 +257,7 @@ const ConfessionStage = ({ onComplete }) => {
           template_id: EMAILJS_TEMPLATE_ID,
           user_id: EMAILJS_PUBLIC_KEY,
           template_params: {
-            to_email: "your-email@gmail.com", // Email của bạn
+            to_email: "your-email@gmail.com",
             subject: "🎂 Kết quả tỏ tình sinh nhật",
             message: message,
             time: new Date().toLocaleString("vi-VN"),
@@ -125,12 +272,12 @@ const ConfessionStage = ({ onComplete }) => {
       setStage(confessionSteps.length + 1);
       setTimeout(() => {
         if (onComplete) onComplete("accepted");
-      }, 4000);
+      }, 5000);
     } else {
       setStage(confessionSteps.length + 2);
       setTimeout(() => {
         if (onComplete) onComplete("declined");
-      }, 4000);
+      }, 5000);
     }
   };
 
@@ -175,7 +322,7 @@ const ConfessionStage = ({ onComplete }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8 }}
           >
             {/* Emoji */}
             <motion.div
@@ -204,9 +351,9 @@ const ConfessionStage = ({ onComplete }) => {
               className="bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-2xl max-w-2xl"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring" }}
+              transition={{ delay: 0.2, type: "spring" }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed">
                 {confessionSteps[stage].text}
               </h2>
             </motion.div>
@@ -217,7 +364,7 @@ const ConfessionStage = ({ onComplete }) => {
                 className="flex gap-2 mt-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
+                transition={{ delay: 0.5 }}
               >
                 {[...Array(3)].map((_, i) => (
                   <motion.div
@@ -270,16 +417,16 @@ const ConfessionStage = ({ onComplete }) => {
               initial={{ y: 20 }}
               animate={{ y: 0 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-2">
-                Chị có cho em cơ hội...
+              <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-2">
+                Chị có cho em một cơ hội...
               </h2>
               <p className="text-2xl md:text-3xl font-bold text-center text-pink-600">
-                Được làm quen với chị không? 🌹
+                Để em được tìm hiểu chị nhiều hơn? 🌹
               </p>
             </motion.div>
 
             {/* Buttons */}
-            <div className="flex gap-6">
+            <div className="flex gap-6 flex-wrap justify-center">
               <motion.button
                 className="px-12 py-6 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-full text-2xl font-bold shadow-2xl"
                 whileHover={{ scale: 1.1, y: -5 }}
@@ -301,7 +448,7 @@ const ConfessionStage = ({ onComplete }) => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.5, type: "spring" }}
               >
-                Để em nghĩ 💭
+                Để chị nghĩ 💭
               </motion.button>
             </div>
           </motion.div>
@@ -367,11 +514,14 @@ const ConfessionStage = ({ onComplete }) => {
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring" }}
             >
-              <h2 className="text-5xl md:text-6xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-4">
-                Cảm ơn chị! 💖
+              <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-4">
+                Cảm ơn chị rất nhiều! 💖
               </h2>
-              <p className="text-2xl text-center text-gray-700">
-                Em sẽ cố gắng để chị luôn hạnh phúc
+              <p className="text-xl text-center text-gray-700 mb-2">
+                Em sẽ cố gắng hết mình
+              </p>
+              <p className="text-xl text-center text-gray-700">
+                Để chị luôn hạnh phúc bên em
               </p>
             </motion.div>
           </motion.div>
@@ -407,10 +557,13 @@ const ConfessionStage = ({ onComplete }) => {
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring" }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed mb-4">
                 Em hiểu rồi 💭
               </h2>
-              <p className="text-xl text-center text-gray-700">
+              <p className="text-lg text-center text-gray-700 mb-2">
+                Em sẽ đợi và tôn trọng quyết định của chị
+              </p>
+              <p className="text-lg text-center text-gray-700">
                 Dù thế nào, em vẫn luôn chúc chị hạnh phúc nhất
               </p>
             </motion.div>
