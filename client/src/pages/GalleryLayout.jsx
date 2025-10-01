@@ -326,7 +326,7 @@ const GalleryLayout = ({ onConfession }) => {
           whileTap={{ scale: 0.95 }}
           onClick={onConfession}
         >
-          <span className="flex items-center gap-2">💌 Xem lời tỏ tình</span>
+          <span className="flex items-center gap-2">💌 Gửi chị lá thư</span>
         </motion.button>
       )}
     </div>
