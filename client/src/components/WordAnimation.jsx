@@ -126,35 +126,53 @@ const WordAnimation = ({
     }
   };
 
-  const getLetterStyle = (index) => ({
-    display: "inline-block",
-    fontSize: `${Math.min(screenWidth, screenHeight) * 0.06}px`,
-    fontWeight: "bold",
-    color: "white",
-    backgroundColor: colors[index],
-    background: gradients[index],
-    border: `3px solid rgba(255,255,255,0.3)`,
-    opacity: 5,
-    userSelect: "none",
-    fontFamily: '"Playfair Display", serif',
-    padding: "12px 16px",
-    margin: "4px",
-    borderRadius: "50%",
-    boxShadow: `
-      0 6px 20px rgba(0,0,0,0.3),
-      0 3px 10px rgba(0,0,0,0.2),
-      inset 0 1px 0 rgba(255,255,255,0.4),
-      inset 0 -2px 0 rgba(0,0,0,0.2)
-    `,
-    textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-    transform: "translateZ(0)",
-    position: "relative",
-    minWidth: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
-    minHeight: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
+  const getLetterStyle = (index, letter) => {
+    const isSpace = letter === " ";
+
+    if (isSpace) {
+      return {
+        display: "inline-block",
+        width: `${Math.min(screenWidth, screenHeight) * 0.04}px`,
+        height: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+        margin: "4px",
+        pointerEvents: "none",
+      };
+    }
+
+    return {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: `${Math.min(screenWidth, screenHeight) * 0.06}px`,
+      fontWeight: "900",
+      color: "white",
+      backgroundColor: colors[index],
+      background: gradients[index],
+      border: `3px solid rgba(255,255,255,0.4)`,
+      userSelect: "none",
+      fontFamily: '"Playfair Display", serif',
+      padding: "12px 16px",
+      margin: "4px",
+      borderRadius: "50%",
+      boxShadow: `
+        0 8px 25px rgba(0,0,0,0.4),
+        0 4px 12px rgba(0,0,0,0.3),
+        inset 0 2px 4px rgba(255,255,255,0.5),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255,255,255,0.2)
+      `,
+      textShadow: `
+        3px 3px 0 rgba(0,0,0,0.3),
+        4px 4px 0 rgba(0,0,0,0.2),
+        5px 5px 0 rgba(0,0,0,0.1),
+        2px 2px 8px rgba(0,0,0,0.5)
+      `,
+      transform: "translateZ(0)",
+      position: "relative",
+      minWidth: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+      minHeight: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+    };
+  };
 
   return (
     <div
