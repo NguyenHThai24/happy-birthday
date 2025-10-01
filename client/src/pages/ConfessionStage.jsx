@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import imgTulip from "../assets/thai-tulip.png";
 
 const ConfessionStage = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
@@ -282,7 +283,7 @@ const ConfessionStage = ({ onComplete }) => {
   };
 
   return (
-    <div className="absolute inset-0 bg-gradient-to-br from-rose-400 via-pink-300 to-purple-400 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-rose-400 via-pink-300 to-purple-400 overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
         {[...Array(30)].map((_, i) => (
@@ -313,12 +314,22 @@ const ConfessionStage = ({ onComplete }) => {
         ))}
       </div>
 
+      {/* Background image at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-0">
+        <img
+          src={imgTulip}
+          alt="Hoa tulip"
+          className="w-full h-auto object-cover"
+          style={{ maxHeight: "40vh" }}
+        />
+      </div>
+
       <AnimatePresence mode="wait">
         {/* Confession messages */}
         {stage < confessionSteps.length && (
           <motion.div
             key={stage}
-            className="absolute inset-0 flex flex-col items-center justify-center px-6"
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
@@ -390,7 +401,7 @@ const ConfessionStage = ({ onComplete }) => {
         {stage === confessionSteps.length && (
           <motion.div
             key="buttons"
-            className="absolute inset-0 flex flex-col items-center justify-center px-6"
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, type: "spring" }}
@@ -458,7 +469,7 @@ const ConfessionStage = ({ onComplete }) => {
         {stage === confessionSteps.length + 1 && (
           <motion.div
             key="accepted"
-            className="absolute inset-0 flex flex-col items-center justify-center px-6"
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
@@ -531,7 +542,7 @@ const ConfessionStage = ({ onComplete }) => {
         {stage === confessionSteps.length + 2 && (
           <motion.div
             key="declined"
-            className="absolute inset-0 flex flex-col items-center justify-center px-6"
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
