@@ -172,12 +172,12 @@ const GalleryLayout = ({ onConfession }) => {
         transition={{ duration: 0.8, type: "spring" }}
       >
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center drop-shadow-xl flex items-center justify-center gap-3">
+          <h1 className="text-[1.2rem] md:text-4xl font-bold text-white text-center drop-shadow-xl flex items-center justify-center gap-3">
             <span>💝</span>
             Kỷ Niệm Đáng Nhớ
             <span>💝</span>
           </h1>
-          <p className="text-white/95 text-center mt-2 text-sm md:text-base font-medium">
+          <p className="text-white/95 text-center mt-2 text-[0.8rem] md:text-base font-medium">
             Rê chuột vào ảnh để xem lời chúc đặc biệt ✨
           </p>
         </div>
@@ -224,7 +224,7 @@ const GalleryLayout = ({ onConfession }) => {
                       <div className="absolute inset-0 bg-gradient-to-br from-pink-400/10 to-rose-400/10 pointer-events-none" />
 
                       {/* Number badge */}
-                      <div className="absolute top-3 right-3 bg-gradient-to-br from-pink-500 to-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                      <div className="absolute top-3 right-3 bg-gradient-to-br from-pink-500 to-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-[0.8rem] font-bold shadow-lg">
                         {i + 1}
                       </div>
 
@@ -313,7 +313,7 @@ const GalleryLayout = ({ onConfession }) => {
       {/* Confession button */}
       {onConfession && (
         <motion.button
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:via-rose-600 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-full shadow-2xl text-lg"
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:via-rose-600 hover:to-pink-700 text-white font-bold px-4 py-2 rounded-full shadow-2xl text-[1rem]"
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{

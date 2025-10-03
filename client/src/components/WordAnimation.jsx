@@ -15,52 +15,19 @@ const getRandomOutside = (width, height) => {
   }
 };
 
-const getRandomColor = () => {
-  const colors = [
-    "#FF6B6B",
-    "#4ECDC4",
-    "#45B7D1",
-    "#96CEB4",
-    "#FFEAA7",
-    "#DDA0DD",
-    "#98D8C8",
-    "#F7DC6F",
-    "#BB8FCE",
-    "#85C1E9",
-    "#F8C471",
-    "#82E0AA",
-    "#F1948A",
-    "#85C1E9",
-    "#D7BDE2",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
-const getRandomGradient = () => {
-  const gradients = [
-    "linear-gradient(45deg, #FF6B6B, #4ECDC4)",
-    "linear-gradient(45deg, #45B7D1, #96CEB4)",
-    "linear-gradient(45deg, #FFEAA7, #DDA0DD)",
-    "linear-gradient(45deg, #98D8C8, #F7DC6F)",
-    "linear-gradient(45deg, #BB8FCE, #85C1E9)",
-    "linear-gradient(45deg, #F8C471, #82E0AA)",
-    "linear-gradient(45deg, #F1948A, #85C1E9)",
-    "linear-gradient(45deg, #D7BDE2, #F8C471)",
-  ];
-  return gradients[Math.floor(Math.random() * gradients.length)];
-};
-
 const WordAnimation = ({
   letters,
   y,
   onComplete,
   stayTime = 3000,
-  animationStyle = "fly", // fly, bounce, scale, twist
+  animationStyle = "fly",
 }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [colors] = useState(letters.map(() => getRandomColor()));
-  const [gradients] = useState(letters.map(() => getRandomGradient()));
+
+  // Tách thành các từ để xuống dòng nguyên từ
+  const text = letters.join("");
+  const words = text.split(" ");
 
   useEffect(() => {
     const handleResize = () => {
@@ -126,85 +93,89 @@ const WordAnimation = ({
     }
   };
 
-  const getLetterStyle = (index, letter) => {
-    const isSpace = letter === " ";
-
-    if (isSpace) {
-      return {
-        display: "inline-block",
-        width: `${Math.min(screenWidth, screenHeight) * 0.04}px`,
-        height: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
-        margin: "4px",
-        pointerEvents: "none",
-      };
-    }
-
+  const getLetterStyle = () => {
     return {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: `${Math.min(screenWidth, screenHeight) * 0.06}px`,
+      display: "inline-block",
+      fontSize: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
       fontWeight: "900",
-      color: "white",
-      backgroundColor: colors[index],
-      background: gradients[index],
-      border: `3px solid rgba(255,255,255,0.4)`,
+      color: "#FF1493",
       userSelect: "none",
       fontFamily: '"Playfair Display", serif',
-      padding: "12px 16px",
-      margin: "4px",
-      borderRadius: "50%",
-      boxShadow: `
-        0 8px 25px rgba(0,0,0,0.4),
-        0 4px 12px rgba(0,0,0,0.3),
-        inset 0 2px 4px rgba(255,255,255,0.5),
-        inset 0 -3px 6px rgba(0,0,0,0.3),
-        0 0 0 1px rgba(255,255,255,0.2)
-      `,
+      margin: "0 4px",
       textShadow: `
-        3px 3px 0 rgba(0,0,0,0.3),
-        4px 4px 0 rgba(0,0,0,0.2),
-        5px 5px 0 rgba(0,0,0,0.1),
-        2px 2px 8px rgba(0,0,0,0.5)
+        3px 3px 0 #FF69B4,
+        6px 6px 0 #FFB6C1,
+        9px 9px 0 #FFC0CB,
+        12px 12px 15px rgba(255,20,147,0.4),
+        -1px -1px 0 #C71585,
+        1px 1px 0 #C71585
       `,
       transform: "translateZ(0)",
       position: "relative",
-      minWidth: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
-      minHeight: `${Math.min(screenWidth, screenHeight) * 0.08}px`,
+      WebkitTextStroke: "2px #C71585",
+      paintOrder: "stroke fill",
     };
   };
+
+  const getWordStyle = () => {
+    return {
+      display: "inline-block",
+      whiteSpace: "nowrap",
+      margin: "8px 16px",
+    };
+  };
+
+  let letterIndex = 0;
 
   return (
     <div
       style={{
         position: "absolute",
         top: y,
-        width: "100%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "90%",
+        maxWidth: "1200px",
         textAlign: "center",
-        whiteSpace: "normal",
         lineHeight: 1.8,
         pointerEvents: "none",
         zIndex: 10,
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {letters.map((letter, i) => {
-        const randomStart = getRandomOutside(screenWidth, screenHeight);
-        const randomEnd = getRandomOutside(screenWidth, screenHeight);
-        const animationProps = getAnimationProps(randomStart, randomEnd, i);
-
+      {words.map((word, wordIdx) => {
+        const wordLetters = word.split("");
         return (
-          <motion.span
-            key={i}
-            style={getLetterStyle(i)}
-            {...animationProps}
-            whileHover={{
-              scale: 1.1,
-              rotate: 5,
-              transition: { duration: 0.2 },
-            }}
-          >
-            {letter}
-          </motion.span>
+          <div key={wordIdx} style={getWordStyle()}>
+            {wordLetters.map((letter, letterIdx) => {
+              const currentIndex = letterIndex++;
+              const randomStart = getRandomOutside(screenWidth, screenHeight);
+              const randomEnd = getRandomOutside(screenWidth, screenHeight);
+              const animationProps = getAnimationProps(
+                randomStart,
+                randomEnd,
+                currentIndex
+              );
+
+              return (
+                <motion.span
+                  key={letterIdx}
+                  style={getLetterStyle()}
+                  {...animationProps}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 5,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  {letter}
+                </motion.span>
+              );
+            })}
+          </div>
         );
       })}
     </div>
