@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Import hình tulip - thay đổi đường dẫn theo project của bạn
 import imgTulip from "../assets/thai-tulip.png";
+// const imgTulip = "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800"; // Placeholder
 
 const ConfessionStage = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
@@ -238,43 +241,21 @@ const ConfessionStage = ({ onComplete }) => {
     }
   }, [stage]);
 
-  const handleResponse = async (answer) => {
-    // Gửi email qua EmailJS
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-
-    const message =
-      answer === "yes"
-        ? "🎉 CHỊ ẤY ĐỒNG Ý! Chị Lâm Bửu Linh đã đồng ý cho em làm quen! 💖"
-        : "💭 Chị ấy chọn 'Để em nghĩ'";
-
-    try {
-      await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          service_id: EMAILJS_SERVICE_ID,
-          template_id: EMAILJS_TEMPLATE_ID,
-          user_id: EMAILJS_PUBLIC_KEY,
-          template_params: {
-            to_email: "your-email@gmail.com",
-            subject: "🎂 Kết quả tỏ tình sinh nhật",
-            message: message,
-            time: new Date().toLocaleString("vi-VN"),
-          },
-        }),
-      });
-    } catch (error) {
-      console.log("Không gửi được email:", error);
-    }
+  const handleResponse = (answer) => {
+    const zaloPhone = "0333929901";
 
     if (answer === "yes") {
+      const message = encodeURIComponent("Chào em! Chị đồng ý cho em được tìm hiểu chị nhiều hơn nhé 💖✨");
+      window.open(`https://zalo.me/${zaloPhone}?text=${message}`, '_blank');
+
       setStage(confessionSteps.length + 1);
       setTimeout(() => {
         if (onComplete) onComplete("accepted");
       }, 5000);
     } else {
+      const message = encodeURIComponent("Chào em! Chị cần thêm thời gian để suy nghĩ nhé 💭");
+      window.open(`https://zalo.me/${zaloPhone}?text=${message}`, '_blank');
+
       setStage(confessionSteps.length + 2);
       setTimeout(() => {
         if (onComplete) onComplete("declined");
@@ -307,23 +288,20 @@ const ConfessionStage = ({ onComplete }) => {
           >
             {
               ["💕", "💖", "💗", "💝", "💘", "🌹", "✨", "💫"][
-                Math.floor(Math.random() * 8)
+              Math.floor(Math.random() * 8)
               ]
             }
           </motion.div>
         ))}
       </div>
-
-      {/* Background image at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-0">
+      <div className="absolute bottom-0 left-0 right-0 z-0 opacity-30">
         <img
           src={imgTulip}
           alt="Hoa tulip"
-          className="w-full h-auto object-cover"
-          style={{ maxHeight: "40vh" }}
+          className="w-[50%] h-[50%] mx-auto object-cover"
+
         />
       </div>
-
       <AnimatePresence mode="wait">
         {/* Confession messages */}
         {stage < confessionSteps.length && (
@@ -357,16 +335,119 @@ const ConfessionStage = ({ onComplete }) => {
               </motion.span>
             </motion.div>
 
-            {/* Text */}
+            {/* Text in Heart Shape */}
             <motion.div
-              className="bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-2xl max-w-2xl"
+              className="relative"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent leading-relaxed">
-                {confessionSteps[stage].text}
-              </h2>
+              {/* Heart Shape Container */}
+              <div className="relative w-[320px] h-[280px] md:w-[400px] md:h-[350px]">
+                {/* Heart SVG Background */}
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 200 200"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{ stopColor: "#ec4899", stopOpacity: 0.95 }} />
+                      <stop offset="50%" style={{ stopColor: "#f43f5e", stopOpacity: 0.95 }} />
+                      <stop offset="100%" style={{ stopColor: "#9333ea", stopOpacity: 0.95 }} />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <motion.path
+                    d="M100,170 C20,120 10,80 10,55 C10,30 30,10 55,10 C75,10 90,20 100,35 C110,20 125,10 145,10 C170,10 190,30 190,55 C190,80 180,120 100,170 Z"
+                    fill="url(#heartGradient)"
+                    filter="url(#glow)"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  />
+                </svg>
+
+                {/* Floating hearts around */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute text-2xl"
+                    style={{
+                      left: `${15 + Math.cos((i * Math.PI * 2) / 6) * 150}px`,
+                      top: `${50 + Math.sin((i * Math.PI * 2) / 6) * 120}px`,
+                    }}
+                    animate={{
+                      y: [0, -10, 0],
+                      opacity: [0.3, 0.7, 0.3],
+                      scale: [0.8, 1, 0.8],
+                    }}
+                    transition={{
+                      duration: 2 + i * 0.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    💕
+                  </motion.div>
+                ))}
+
+                {/* Text Content */}
+                <div className="absolute inset-0 flex items-center justify-center px-8 py-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-center text-white drop-shadow-lg leading-relaxed">
+                    {confessionSteps[stage].text}
+                  </h2>
+                </div>
+
+                {/* Sparkles */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={`sparkle-${i}`}
+                    className="absolute text-xl"
+                    style={{
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      rotate: [0, 180, 360],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    ✨
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Pulsing heart effect */}
+              <motion.div
+                className="absolute inset-0 -z-10"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  filter: "blur(20px)",
+                  background: "radial-gradient(circle, rgba(236,72,153,0.6) 0%, transparent 70%)",
+                }}
+              />
             </motion.div>
 
             {/* Loading dots for non-question stages */}
@@ -499,7 +580,7 @@ const ConfessionStage = ({ onComplete }) => {
               >
                 {
                   ["🎉", "💖", "✨", "🎊", "💝", "🌟"][
-                    Math.floor(Math.random() * 6)
+                  Math.floor(Math.random() * 6)
                   ]
                 }
               </motion.div>
