@@ -54,7 +54,7 @@ const ConfessionStage = ({ onComplete }) => {
       { text: "Giọng nói của chị", duration: 3500 },
       { text: "Luôn ngập tràn sự hồn nhiên, tươi vui", duration: 4000 },
       {
-        text: "Như một làn gió mát lành xua tan mọi muộn phiền",
+        text: "Như một làn gió xua tan mọi muộn phiền",
         duration: 4000,
       },
       { text: "Chị biết không...", duration: 3500 },
