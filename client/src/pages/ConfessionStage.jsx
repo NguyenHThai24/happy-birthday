@@ -5,14 +5,15 @@ import imgTulip from "../assets/thai-tulip.png";
 const ConfessionStage = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [showZaloReminder, setShowZaloReminder] = useState(false);
-  const [userResponse, setUserResponse] = useState(null);
+
+  // Google Form URL - thay bằng URL form thực tế của bạn
+  const GOOGLE_FORM_URL =
+    "https://docs.google.com/forms/d/1KJ9rcWIAaohT8GsFGQAxajFORw4Hsy4jqqSQvJgalTU/edit";
 
   // Memoize confession steps to prevent unnecessary re-renders
   const confessionSteps = useMemo(
     () => [
       { text: "...", duration: 4000 },
-
       { text: "Em muốn nói với chị...", duration: 3500 },
       { text: "Từ lần đầu tiên gặp chị", duration: 4000 },
       { text: "Em đã cảm thấy điều gì đó khác biệt", duration: 4000 },
@@ -48,7 +49,6 @@ const ConfessionStage = ({ onComplete }) => {
       },
       { text: "Để hoàn thiện bản thân mỗi ngày", duration: 3500 },
       { text: "Để xứng đáng hơn với tình cảm của chị", duration: 4000 },
-
       { text: "Mỗi lần nhìn thấy chị", duration: 3500 },
       { text: "Tim em lại đập nhanh hơn", duration: 4000 },
       { text: "Giọng nói của chị", duration: 3500 },
@@ -57,7 +57,6 @@ const ConfessionStage = ({ onComplete }) => {
         text: "Như một làn gió mát lành xua tan mọi muộn phiền",
         duration: 4000,
       },
-
       { text: "Chị biết không...", duration: 3500 },
       { text: "Kể từ ngày 27/08 ấy", duration: 3500 },
       { text: "Mọi thứ với em đều trở nên ý nghĩa", duration: 4000 },
@@ -181,28 +180,24 @@ const ConfessionStage = ({ onComplete }) => {
     }
   }, [stage, confessionSteps]);
 
-  // Memoized response handler
+  // Simple response handler - mở Google Form
   const handleResponse = useCallback(
     (answer) => {
-      setUserResponse(answer);
-      setShowZaloReminder(true);
+      // Mở Google Form trong tab mới
+      window.open(GOOGLE_FORM_URL, "_blank");
 
-      // Auto hide reminder after 8 seconds
+      // Chuyển đến trang kết quả ngay lập tức
+      const nextStage =
+        answer === "yes"
+          ? confessionSteps.length + 1
+          : confessionSteps.length + 2;
+      setStage(nextStage);
+
       setTimeout(() => {
-        setShowZaloReminder(false);
-        // Move to result stage after showing reminder
-        const nextStage =
-          answer === "yes"
-            ? confessionSteps.length + 1
-            : confessionSteps.length + 2;
-        setStage(nextStage);
-
-        setTimeout(() => {
-          onComplete?.(answer === "yes" ? "accepted" : "declined");
-        }, 5000);
-      }, 8000);
+        onComplete?.(answer === "yes" ? "accepted" : "declined");
+      }, 5000);
     },
-    [confessionSteps.length, onComplete]
+    [confessionSteps.length, onComplete, GOOGLE_FORM_URL]
   );
 
   // Heart explosion elements
@@ -218,71 +213,8 @@ const ConfessionStage = ({ onComplete }) => {
     []
   );
 
-  const closeReminder = () => {
-    setShowZaloReminder(false);
-    const nextStage =
-      userResponse === "yes"
-        ? confessionSteps.length + 1
-        : confessionSteps.length + 2;
-    setStage(nextStage);
-
-    setTimeout(() => {
-      onComplete?.(userResponse === "yes" ? "accepted" : "declined");
-    }, 5000);
-  };
-
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-pink-100 via-rose-100 to-pink-200 overflow-hidden">
-      {/* Zalo Reminder Modal */}
-      <AnimatePresence>
-        {showZaloReminder && (
-          <motion.div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-white rounded-3xl p-8 max-w-md w-full mx-auto shadow-2xl"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", damping: 25 }}
-            >
-              <div className="text-center">
-                <motion.div
-                  className="text-6xl mb-4"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0],
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  💌
-                </motion.div>
-                <h3 className="text-2xl font-semibold text-pink-600 mb-4">
-                  Cảm ơn chị đã trả lời!
-                </h3>
-                <p className="text-gray-600 mb-2">
-                  Chị gửi tin nhắn qua Zalo để em biết câu trả lời của chị nhé!
-                </p>
-                <p className="text-sm text-gray-500 mb-6">
-                  Zalo: 0333929901 (đã kết bạn)
-                </p>
-                <motion.button
-                  className="bg-gradient-to-r from-pink-400 to-rose-400 text-white px-6 py-3 rounded-2xl font-medium hover:from-pink-500 hover:to-rose-500 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={closeReminder}
-                >
-                  Đã hiểu 💖
-                </motion.button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Optimized Floating hearts background - Slower and smoother */}
       <div className="absolute inset-0">
         {backgroundHearts.map((heart) => (
