@@ -523,10 +523,10 @@ const ResponseButtons = ({ handleResponse, confessionSteps }) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          Được nhé 💖
+          Trả lời 💖
         </motion.button>
 
-        <motion.button
+        {/* <motion.button
           className="flex-1 py-4 px-8 bg-white hover:bg-pink-50 text-pink-600 rounded-2xl text-lg font-medium border-2 border-pink-200 shadow-lg transition-all"
           whileHover={{ scale: 1.05, y: -3 }}
           whileTap={{ scale: 0.95 }}
@@ -536,7 +536,7 @@ const ResponseButtons = ({ handleResponse, confessionSteps }) => {
           transition={{ delay: 0.6 }}
         >
           Để chị nghĩ 💭
-        </motion.button>
+        </motion.button> */}
       </div>
     </motion.div>
   );
