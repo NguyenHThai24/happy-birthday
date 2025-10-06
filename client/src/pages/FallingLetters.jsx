@@ -75,6 +75,15 @@ const FallingLetters = ({ onStartMusic }) => {
           letters={"LÂM BỬU LINH".split("")}
           y={centerY}
           stayTime={4000}
+          onComplete={() => setStage("date")}
+        />
+      )}
+      {/* Date */}
+      {stage === "date" && (
+        <WordAnimation
+          letters={"01-11-2025".split("")}
+          y={centerY}
+          stayTime={5000}
           onComplete={() => setStage("age")}
         />
       )}
@@ -141,16 +150,6 @@ const FallingLetters = ({ onStartMusic }) => {
           letters={"YÊU CHỊ RẤT NHIỀU".split("")}
           y={centerY}
           stayTime={4000}
-          onComplete={() => setStage("date")}
-        />
-      )}
-
-      {/* Date */}
-      {stage === "date" && (
-        <WordAnimation
-          letters={"01/11/2025".split("")}
-          y={centerY}
-          stayTime={5000}
         />
       )}
     </div>
