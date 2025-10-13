@@ -425,8 +425,10 @@ const ConfessionStage = ({ onComplete }) => {
               >
                 💝
               </motion.div>
-              <h2 className="text-3xl md:text-4xl font-light text-transparent bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text mb-4">
-                Cảm ơn chị đã đọc những dòng tâm sự này. Em luôn ở đây chờ chị
+              <h2 className="text-3xl md:text-4xl font-light text-transparent text-center bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text mb-4">
+                Cảm ơn chị đã đọc những dòng tâm sự này.
+                <br />
+                Em luôn ở đây chờ chị
               </h2>
             </motion.div>
           </motion.div>
