@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import imgTulip from "../assets/thai-tulip.png";
 
 const ConfessionStage = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
   const [progress, setProgress] = useState(0);
-
-  // Google Form URL - thay bằng URL form thực tế của bạn
-  const GOOGLE_FORM_URL =
-    "https://docs.google.com/forms/d/1KJ9rcWIAaohT8GsFGQAxajFORw4Hsy4jqqSQvJgalTU/edit";
 
   // Memoize confession steps to prevent unnecessary re-renders
   const confessionSteps = useMemo(
@@ -88,13 +83,8 @@ const ConfessionStage = ({ onComplete }) => {
       { text: "Em không biết tương lai sẽ ra sao", duration: 3500 },
       { text: "Nhưng em biết rằng...", duration: 3500 },
       { text: "Kể từ 27/08 định mệnh ấy", duration: 3500 },
-      { text: "Em muốn chị ở trong đó", duration: 4000 },
-      { text: "Chị có cho em một cơ hội...", duration: 4500 },
-      {
-        text: "Để em được tìm hiểu chị nhiều hơn?",
-        duration: 5000,
-        isQuestion: true,
-      },
+      { text: "Em muốn chị ở trong đó", duration: 5000 },
+      { text: "Em yêu chị rất nhiều 💖", duration: 5000 },
     ],
     []
   );
@@ -177,28 +167,14 @@ const ConfessionStage = ({ onComplete }) => {
         clearTimeout(timer);
         clearInterval(progressInterval);
       };
+    } else if (stage === confessionSteps.length) {
+      // Tự động chuyển sang màn hình kết thúc sau 2 giây
+      const timer = setTimeout(() => {
+        onComplete?.("completed");
+      }, 15000);
+      return () => clearTimeout(timer);
     }
-  }, [stage, confessionSteps]);
-
-  // Simple response handler - mở Google Form
-  const handleResponse = useCallback(
-    (answer) => {
-      // Mở Google Form trong tab mới
-      window.open(GOOGLE_FORM_URL, "_blank");
-
-      // Chuyển đến trang kết quả ngay lập tức
-      const nextStage =
-        answer === "yes"
-          ? confessionSteps.length + 1
-          : confessionSteps.length + 2;
-      setStage(nextStage);
-
-      setTimeout(() => {
-        onComplete?.(answer === "yes" ? "accepted" : "declined");
-      }, 5000);
-    },
-    [confessionSteps.length, onComplete, GOOGLE_FORM_URL]
-  );
+  }, [stage, confessionSteps, onComplete]);
 
   // Heart explosion elements
   const heartExplosionElements = useMemo(
@@ -284,7 +260,7 @@ const ConfessionStage = ({ onComplete }) => {
             transition={{ duration: 0.8 }}
           >
             {/* Progress indicator */}
-            <div className="fixed top-0 left-0 right-0 z-50">
+            {/* <div className="fixed top-0 left-0 right-0 z-50">
               <div className="h-1 bg-pink-200">
                 <motion.div
                   className="h-full bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500"
@@ -296,7 +272,7 @@ const ConfessionStage = ({ onComplete }) => {
               <div className="text-center py-2 text-pink-600 text-sm font-medium bg-white/50 backdrop-blur-sm">
                 {stage + 1} / {totalSteps}
               </div>
-            </div>
+            </div> */}
 
             {/* Optimized Animated hearts around card */}
             {cardHearts.map((heart) => (
@@ -321,13 +297,7 @@ const ConfessionStage = ({ onComplete }) => {
                 {["💖", "💝", "💗", "💕"][heart.id % 4]}
               </motion.div>
             ))}
-            <div className="absolute bottom-0 left-0 right-0 z-0 opacity-30">
-              <img
-                src={imgTulip}
-                alt="Hoa tulip"
-                className="w-[50%] h-[50%] mx-auto object-cover"
-              />
-            </div>
+
             {/* Main card */}
             <motion.div
               className="max-w-4xl w-full relative"
@@ -388,22 +358,20 @@ const ConfessionStage = ({ onComplete }) => {
               </div>
 
               {/* Hint text */}
-              {!confessionSteps[stage].isQuestion && (
-                <motion.p
-                  className="text-pink-600 text-center mt-6 text-sm flex items-center justify-center gap-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <span className="animate-pulse">💗</span>
-                  Đang đọc...
-                  <span className="animate-pulse">💗</span>
-                </motion.p>
-              )}
+              <motion.p
+                className="text-pink-600 text-center mt-6 text-sm flex items-center justify-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                <span className="animate-pulse">💗</span>
+                Đang đọc...
+                <span className="animate-pulse">💗</span>
+              </motion.p>
             </motion.div>
 
             {/* Skip button */}
-            <motion.button
+            {/* <motion.button
               className="fixed bottom-8 right-8 text-pink-500 hover:text-pink-700 text-sm font-medium bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg transition-colors z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -411,220 +379,61 @@ const ConfessionStage = ({ onComplete }) => {
               onClick={() => setStage(confessionSteps.length)}
             >
               Bỏ qua →
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         )}
 
-        {/* Response buttons */}
+        {/* Final response */}
         {stage === confessionSteps.length && (
-          <ResponseButtons
-            handleResponse={handleResponse}
-            confessionSteps={confessionSteps}
-          />
-        )}
+          <motion.div
+            key="final"
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+          >
+            {/* Heart explosion */}
+            {heartExplosionElements.map((heart) => (
+              <motion.div
+                key={heart.id}
+                className="absolute text-2xl pointer-events-none"
+                style={{ left: "50%", top: "50%" }}
+                initial={{ scale: 0, x: 0, y: 0 }}
+                animate={{
+                  scale: [0, 1, 0.8],
+                  x: heart.x,
+                  y: heart.y,
+                  rotate: heart.rotate,
+                  opacity: [0, 1, 0],
+                }}
+                transition={{ duration: 2.5, ease: "easeOut" }}
+              >
+                {heart.type}
+              </motion.div>
+            ))}
 
-        {/* Accepted response */}
-        {stage === confessionSteps.length + 1 && (
-          <AcceptedResponse heartExplosionElements={heartExplosionElements} />
+            <motion.div
+              className="bg-white/95 backdrop-blur-xl rounded-3xl border-2 border-pink-200 p-10 md:p-16 shadow-2xl max-w-2xl text-center relative z-10"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5, type: "spring" }}
+            >
+              <motion.div
+                className="text-7xl mb-6"
+                animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+                transition={{ duration: 2.5 }}
+              >
+                💝
+              </motion.div>
+              <h2 className="text-3xl md:text-4xl font-light text-transparent bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text mb-4">
+                Cảm ơn chị đã đọc những dòng tâm sự này. Em luôn ở đây chờ chị
+              </h2>
+            </motion.div>
+          </motion.div>
         )}
-
-        {/* Declined response */}
-        {stage === confessionSteps.length + 2 && <DeclinedResponse />}
       </AnimatePresence>
     </div>
   );
 };
-
-// Extracted components for better performance
-const ResponseButtons = ({ handleResponse, confessionSteps }) => {
-  const questionHearts = useMemo(
-    () =>
-      Array.from({ length: 12 }, (_, i) => ({
-        id: i,
-        left: 20 + i * 7,
-        top: 30 + (i % 3) * 20,
-        duration: 12 + i * 0.8,
-      })),
-    []
-  );
-
-  return (
-    <motion.div
-      key="buttons"
-      className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1 }}
-    >
-      {/* Floating hearts animation */}
-      {questionHearts.map((heart) => (
-        <motion.div
-          key={`question-heart-${heart.id}`}
-          className="absolute text-3xl pointer-events-none"
-          style={{
-            left: `${heart.left}%`,
-            top: `${heart.top}%`,
-          }}
-          animate={{
-            y: [0, -40, 0],
-            rotate: [0, 360],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: heart.duration,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          {["💕", "💖", "💗", "💝"][heart.id % 4]}
-        </motion.div>
-      ))}
-
-      {/* Question card */}
-      <motion.div
-        className="max-w-3xl w-full mb-12 relative z-10"
-        initial={{ y: 30 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <div className="bg-white/95 backdrop-blur-xl rounded-3xl border-2 border-pink-200 p-8 md:p-12 shadow-2xl">
-          <div className="text-center mb-6">
-            <motion.div
-              animate={{
-                scale: [1, 1.15, 1],
-                rotate: [0, 8, -8, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-              }}
-              className="text-6xl mb-4"
-            >
-              💝
-            </motion.div>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-light text-transparent bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-center leading-relaxed mb-4">
-            {confessionSteps[confessionSteps.length - 2].text}
-          </h2>
-          <p className="text-2xl md:text-3xl text-pink-600 text-center">
-            {confessionSteps[confessionSteps.length - 1].text}
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md px-4 relative z-10">
-        <motion.button
-          className="flex-1 py-4 px-8 bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white rounded-2xl text-lg font-medium shadow-xl transition-all"
-          whileHover={{ scale: 1.05, y: -3 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => handleResponse("yes")}
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          Trả lời 💖
-        </motion.button>
-
-        {/* <motion.button
-          className="flex-1 py-4 px-8 bg-white hover:bg-pink-50 text-pink-600 rounded-2xl text-lg font-medium border-2 border-pink-200 shadow-lg transition-all"
-          whileHover={{ scale: 1.05, y: -3 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => handleResponse("no")}
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          Để chị nghĩ 💭
-        </motion.button> */}
-      </div>
-    </motion.div>
-  );
-};
-
-const AcceptedResponse = ({ heartExplosionElements }) => (
-  <motion.div
-    key="accepted"
-    className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 1 }}
-  >
-    {/* Heart explosion */}
-    {heartExplosionElements.map((heart) => (
-      <motion.div
-        key={heart.id}
-        className="absolute text-2xl pointer-events-none"
-        style={{ left: "50%", top: "50%" }}
-        initial={{ scale: 0, x: 0, y: 0 }}
-        animate={{
-          scale: [0, 1, 0.8],
-          x: heart.x,
-          y: heart.y,
-          rotate: heart.rotate,
-          opacity: [0, 1, 0],
-        }}
-        transition={{ duration: 2.5, ease: "easeOut" }}
-      >
-        {heart.type}
-      </motion.div>
-    ))}
-
-    <motion.div
-      className="bg-white/95 backdrop-blur-xl rounded-3xl border-2 border-pink-200 p-10 md:p-16 shadow-2xl max-w-2xl text-center relative z-10"
-      initial={{ scale: 0.8 }}
-      animate={{ scale: 1 }}
-      transition={{ delay: 0.5, type: "spring" }}
-    >
-      <motion.div
-        className="text-7xl mb-6"
-        animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
-        transition={{ duration: 2.5 }}
-      >
-        🎊
-      </motion.div>
-      <h2 className="text-3xl md:text-4xl font-light text-transparent bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text mb-4">
-        Cảm ơn chị rất nhiều!
-      </h2>
-      <p className="text-lg text-pink-700">
-        Em sẽ cố gắng hết mình để chị luôn hạnh phúc bên em
-      </p>
-    </motion.div>
-  </motion.div>
-);
-
-const DeclinedResponse = () => (
-  <motion.div
-    key="declined"
-    className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4"
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 1 }}
-  >
-    <motion.div
-      className="bg-white/95 backdrop-blur-xl rounded-3xl border-2 border-pink-200 p-10 md:p-16 shadow-2xl max-w-2xl text-center relative z-10"
-      initial={{ scale: 0.8 }}
-      animate={{ scale: 1 }}
-      transition={{ delay: 0.5, type: "spring" }}
-    >
-      <motion.div
-        className="text-7xl mb-6"
-        animate={{ scale: [1, 1.08, 1] }}
-        transition={{ duration: 4, repeat: Infinity }}
-      >
-        🌸
-      </motion.div>
-      <h2 className="text-3xl md:text-4xl font-light text-transparent bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text mb-4">
-        Em hiểu rồi
-      </h2>
-      <p className="text-lg text-pink-700 mb-3">
-        Em sẽ đợi và tôn trọng quyết định của chị
-      </p>
-      <p className="text-lg text-pink-700">
-        Dù thế nào, em vẫn luôn chúc chị hạnh phúc nhất
-      </p>
-    </motion.div>
-  </motion.div>
-);
 
 export default ConfessionStage;
